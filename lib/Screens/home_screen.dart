@@ -151,135 +151,161 @@
 
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({super.key, required this.title});
-  Color? nullableColor = Colors.grey;
+import 'package:flutter/material.dart';
 
-  final String title;
+import '../models/dummy_data.dart';
+import '../widgeets/home_widgwts.dart';
+
+class MyHomePage extends StatelessWidget {
+  MyHomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    Color nonNullableColor = nullableColor!; // explicit casting
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    return MaterialApp(
-      home: Scaffold(
-        body: Stack(
-          children: [
-            CustomScrollView(
-              slivers: <Widget>[
-                SliverAppBar(
-                    snap: false,
-                    floating: true,
-                    expandedHeight: 200,
-                    flexibleSpace: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        SizedBox(
-                          width: width * 1,
-                          child: Image(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                  'assets/images/clothes_anger.png')),
-                        ),
-                        SizedBox(
-                          width: width * 1,
-                          child: Image(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                  'assets/images/clothes_anger3.png')),
-                        )
-                      ],
-                    )
-
-                    //Placeholder(),
+    return Scaffold(
+      body: Stack(
+        children: [
+          CustomScrollView(
+            anchor: 0.05,
+            slivers: <Widget>[
+              SliverAppBar(
+                snap: false,
+                floating: true,
+                expandedHeight: 200,
+                flexibleSpace: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: const [
+                    PromotionsItems(
+                      imagePath: 'assets/images/clothes_anger.png',
+                      harshTag: '#Fashion Day',
+                      largTeext: '80% OFF',
+                      fadedText: 'Discover fashion that suits to your style',
                     ),
-                SliverPersistentHeader(
-                  delegate: StickyWidget(),
-                  pinned: true,
-                ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return ListTile(title: Text('Item $index'));
-                    },
-                    childCount: 20,
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              left: width * 0.05,
-              top: height * 0.1,
-              child: SizedBox(
-                width: width * 0.9,
-                height: 40,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: width * 0.67,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        border: Border.all(
-                          color: Colors.grey[300] ?? nonNullableColor,
-                          width: 1,
-                        ),
-                      ),
-                      child: const TextField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          hintText: 'Search',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: width * 0.05,
-                    ),
-                    Badge(
-                      backgroundColor: Colors.redAccent,
-                      label: Text('5'),
-                      child: Icon(Icons.message_outlined),
-                    ),
-                    SizedBox(
-                      width: width * 0.05,
-                    ),
-                    Badge(
-                      backgroundColor: Colors.redAccent,
-                      label: Text('5'),
-                      child: Icon(Icons.shop_two),
+                    PromotionsItems(
+                      imagePath: 'assets/images/beauty.png',
+                      harshTag: '#BEAUTYSALRE',
+                      largTeext: 'DISCOVER OUR BEAUTY SELECTION',
+                      fadedText: '',
+                      fontSizelargText: 17,
+                      fontWeightelargText: FontWeight.w600,
                     ),
                   ],
                 ),
               ),
+              SliverPersistentHeader(
+                delegate: StickyWidget(),
+                pinned: true,
+                floating: true,
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        Text('Item $index'),
+                        SizedBox(height: 15),
+                        Container(
+                          color: const Color.fromARGB(31, 142, 142, 142),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Best Sale Product',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                'See more',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.teal,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 15,
+                          color: const Color.fromARGB(31, 142, 142, 142),
+                        ),
+                      ],
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
+              SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                  mainAxisExtent: 260,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    final prodItem = productItem[index];
+                    return ProductTile(
+                      prodItem: prodItem,
+                    );
+                  },
+                  childCount: productItem.length,
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            left: width * 0.05,
+            top: height * 0.065,
+            child: SizedBox(
+              width: width * 0.9,
+              height: 40,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: width * 0.67,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(3),
+                      border: Border.all(
+                        color: Colors.grey[300] ?? Colors.grey,
+                        width: 1,
+                      ),
+                    ),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search),
+                        hintText: 'Search',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.05,
+                  ),
+                  const Badge(
+                    backgroundColor: Colors.redAccent,
+                    label: Text('1'),
+                    child: Icon(Icons.shop_two),
+                  ),
+                  SizedBox(
+                    width: width * 0.05,
+                  ),
+                  const Badge(
+                    backgroundColor: Colors.redAccent,
+                    label: Text('9+'),
+                    child: Icon(Icons.message_outlined),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-}
-
-class StickyWidget extends SliverPersistentHeaderDelegate {
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: Colors.blue,
-      child: Center(
-        child: Text('Sticky Widget'),
-      ),
-    );
-  }
-
-  @override
-  double get maxExtent => 50;
-
-  @override
-  double get minExtent => 50;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      false;
 }
