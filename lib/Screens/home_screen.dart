@@ -151,8 +151,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
 import '../models/dummy_data.dart';
 import '../widgeets/home_widgwts.dart';
 

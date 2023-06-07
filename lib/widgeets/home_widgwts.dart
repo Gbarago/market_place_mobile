@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:market_place_mobile/models/dummy_data.dart';
 
 import '../Screens/product_deetails_screen.dart';
 import '../models/prooduct_moodel.dart';
@@ -112,6 +111,7 @@ class _ProductTileState extends State<ProductTile> {
                     ProductDetailsPage(
                       productInfo: widget.prodItem,
                     ),
+                transitionDuration: Duration(seconds: 1),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return FadeTransition(
@@ -209,7 +209,6 @@ class _ProductTileState extends State<ProductTile> {
         ],
       ),
     );
-    ;
   }
 }
 
